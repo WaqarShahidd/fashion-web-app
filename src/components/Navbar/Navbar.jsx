@@ -8,6 +8,8 @@ import { Popover, Transition } from "@headlessui/react";
 import { data } from "./navbarData";
 import { XIcon } from "@heroicons/react/outline";
 import "../../index.css";
+import { Link } from "react-router-dom";
+import Grid from "../Shopping/Grid";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -75,19 +77,21 @@ const Navbar = () => {
                                     <div key={category.name}>
                                       <p
                                         id={`${category.name}`}
-                                        className="font-medium text-gray-900 "
+                                        className="font-bold text-gray-900 "
                                       >
                                         {category.name}
                                       </p>
-                                      <ul className="mt-6 space-y-6">
+                                      <ul className="mt-6 space-y-6 text-gray-700">
                                         {category.items.map((item) => (
                                           <li key={item.name} className="flex">
-                                            <a
-                                              href="/"
-                                              className="hover:text-gray-600"
-                                            >
-                                              {item.name}
-                                            </a>
+                                            <Link to="/grid">
+                                              <a
+                                                href="/"
+                                                className="hover:text-gray-600"
+                                              >
+                                                {item.name}
+                                              </a>
+                                            </Link>
                                           </li>
                                         ))}
                                       </ul>

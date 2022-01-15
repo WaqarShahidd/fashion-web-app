@@ -1,3 +1,5 @@
+import Grid from "../Shopping/Grid";
+
 export const data = {
   catalog: [
     {
@@ -22,7 +24,7 @@ export const data = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "Shirt", href: "/" },
+            { name: "Shirt", href: "/Grid" },
             { name: "Jeans", href: "/" },
             { name: "Jackets", href: "/" },
           ],
