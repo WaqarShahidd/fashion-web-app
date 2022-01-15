@@ -1,0 +1,74 @@
+@import "react-slideshow-image/dist/styles.css";
+
+.each-slide > div {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 600px;
+}
+
+.each-slide span {
+  padding: 20px;
+  font-size: 20px;
+  background: transparent;
+  text-align: center;
+}
+
+.indicator {
+  margin: 8px;
+  padding: 3px;
+  text-align: center;
+  border: 1px #666 solid;
+  border-radius: 100%;
+  border-color: white;
+  background: white;
+}
+
+.indicator.active {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  color: #fff;
+  background: transparent;
+}
+.indicator.active:hover {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  color: #fff;
+  background: transparent;
+}
+.indicator:hover {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  margin: 8px;
+  padding: 3px;
+  text-align: center;
+  border: 1px #666 solid;
+  border-radius: 100%;
+  border-color: gray;
+  background: gray;
+}
+
+.react-slideshow-container + ul.indicators {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-top: -60px;
+  z-index: 150px;
+}
