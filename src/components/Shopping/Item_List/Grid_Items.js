@@ -1,8 +1,8 @@
 import React from "react";
-import product_card from "../../data/product_data";
+import { Link } from "react-router-dom";
+import product_card from "./product_data";
 
 const Grid_Items = () => {
-  console.log(product_card);
   const listItems = product_card.map((item) => (
     <div
       className="bg-[#f6f5f3] justify-center items-center m-3 mb-8 transition ease-in-out duration-500 "
@@ -24,9 +24,11 @@ const Grid_Items = () => {
           />
         </svg>
       </div>
-      <div className="  justify-center items-center p-20 hover:border-2 border-2 border-[#f6f5f3] hover:border-[#E5E2DC]">
-        <img className="h-52 w-52" src={item.thumb} />
-      </div>
+      <Link to="/product">
+        <div className="  justify-center items-center p-20 hover:border-2 border-2 border-[#f6f5f3] hover:border-[#E5E2DC]">
+          <img className="h-52 w-52" src={item.thumb} alt={""} />
+        </div>
+      </Link>
       <div className="bg-white flex-row flex items-center justify-between pt-4 ">
         <div className=" text-center text-[#443f4c] text-xs font-medium">
           {item.product_name}

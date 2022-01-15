@@ -1,7 +1,6 @@
 import React from "react";
-import CustomButton from "./CustomButton";
-
 import Magnifier from "react-glass-magnifier";
+
 function Item_Desc() {
   return (
     <div className="overflow-x-hidden overflow-y-hidden  h-full w-full">
@@ -51,7 +50,7 @@ function Item_Desc() {
           >
             Continue Shopping
           </button>
-          <div className="mt-8 flex items-stretch justify-center items-center">
+          <div className="mt-8 flex items-stretch justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 mr-4"

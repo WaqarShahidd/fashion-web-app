@@ -17,7 +17,7 @@ const Navbar = () => {
 
   // h-20 flex items-center justify-center text-white bg-gradient-to-b from-slate-500 hover:bg-black hover:from-black
   return (
-    <div className="fixed z-10 w-full ">
+    <div className="fixed z-50 w-full">
       {x && (
         <div className=" bg-indigo-800 h-10 flex w-full flex-row items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8 z-50">
           <p className="mx-auto">Get free delivery on orders over Rs. 2000</p>
@@ -27,9 +27,9 @@ const Navbar = () => {
           />
         </div>
       )}
-      <header className="h-24 flex w-full absolute inset-x-0 bg-white">
+      <header className="h-24 flex w-full absolute inset-x-0 bg-white ">
         <nav className=" items-center justify-center">
-          <div className="justify-between flex w-5/6 mx-auto absolute inset-0 border-b-2 border-slate-400">
+          <div className="justify-between flex w-5/6 mx-auto absolute inset-0 border-b-2 border-slate-400 ">
             <button
               onClick={() => setOpen(!open)}
               className="bg-white p-2  rounded-md lg:hidden"
@@ -53,7 +53,7 @@ const Navbar = () => {
                           <Popover.Button
                             className={`${
                               open
-                                ? " text-red-500 border-b-red-500 "
+                                ? " text-red-500 border-b-red-500 font-link "
                                 : "border-b-transparent text-gray-800 hover:text-gray-500 font-link font-bold text-md"
                             } " relative z-10 flex items-center ease-out duration-200 font-medium border-b-2 " `}
                           >
