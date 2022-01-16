@@ -9,7 +9,7 @@ import { data } from "./navbarData";
 import { XIcon } from "@heroicons/react/outline";
 import "../../index.css";
 import { Link } from "react-router-dom";
-import Grid from "../Shopping/Grid";
+import Grid from "../Shopping/Products/Grid";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -29,7 +29,7 @@ const Navbar = () => {
       )}
       <header className="h-24 flex w-full absolute inset-x-0 bg-white ">
         <nav className=" items-center justify-center">
-          <div className="justify-between flex w-5/6 mx-auto absolute inset-0 border-b-2 border-slate-400 ">
+          <div className="justify-between flex  mx-20 absolute inset-0 border-b-2 border-slate-400 ">
             <button
               onClick={() => setOpen(!open)}
               className="bg-white p-2  rounded-md lg:hidden"
@@ -44,7 +44,7 @@ const Navbar = () => {
             </div>
             {/* FLYOVER */}
             <div className="cat-display hidden lg:ml-8 lg:block lg:self-stretch">
-              <div className="ml-24 h-full flex space-x-8">
+              <div className="ml-28 h-full flex space-x-8">
                 {data.catalog.map((catalog) => (
                   <Popover className="flex" key={catalog.name}>
                     {({ open }) => (
@@ -101,11 +101,11 @@ const Navbar = () => {
                                 <div className="col-start-2 grid grid-cols-2 ">
                                   {catalog.featured.map((item) => (
                                     <div key={item.name} className="group">
-                                      <div className="aspect-w-1 aspect-h-1 mr-4 rounded-lg bg-black overflow-hidden group-hover:opacity-75">
+                                      <div className="h-96 aspect-w-1 aspect-h-1 mr-4 rounded-lg  overflow-hidden group-hover:opacity-75">
                                         <img
                                           src={item.imageSrc}
                                           alt={""}
-                                          className="object-cover "
+                                          className="object-cover rounded-md"
                                         />
                                       </div>
                                       <a

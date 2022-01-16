@@ -5,7 +5,7 @@ import product_card from "./product_data";
 const Grid_Items = () => {
   const listItems = product_card.map((item) => (
     <div
-      className="bg-[#f6f5f3] justify-center items-center m-3 mb-8 transition ease-in-out duration-500 "
+      className="bg-[#e0ddd7] justify-center items-center m-3 mb-8 transition ease-in-out duration-500 "
       key={item.id}
     >
       <div className="float-right mr-4 mt-3">
@@ -25,22 +25,26 @@ const Grid_Items = () => {
         </svg>
       </div>
       <Link to="/product">
-        <div className="  justify-center items-center p-20 hover:border-2 border-2 border-[#f6f5f3] hover:border-[#E5E2DC]">
-          <img className="h-52 w-52" src={item.thumb} alt={""} />
+        <div className=" justify-center items-center p-20 hover:border-2 border-2 border-[#f6f5f3] hover:border-[#E5E2DC]">
+          <img
+            className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+            src={item.thumb}
+            alt={""}
+          />
         </div>
       </Link>
-      <div className="bg-white flex-row flex items-center justify-between pt-4 ">
-        <div className=" text-center text-[#443f4c] text-xs font-medium">
+      <div className="bg-white w-full flex-row flex items-center justify-between pt-4 ">
+        <div className=" text-center text-[#443f4c] text-sm ">
           {item.product_name}
         </div>
-        <div className=" text-center text-[#443f4c] text-xs font-medium">
+        <div className=" text-center text-[#443f4c] text-sm font-medium ">
           {item.price}
         </div>
       </div>
     </div>
   ));
   return (
-    <div className="lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 sm:grid sm:grid-cols-1 ">
+    <div className="lg:grid lg:grid-cols-4 md:grid md:grid-cols-2 sm:grid sm:grid-cols-1 ">
       {listItems}
     </div>
   );

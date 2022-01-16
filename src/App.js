@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Slider from "./components/Home/Slider/Slider";
 import DisplayPictures from "./components/Home/DisplayPictures";
-import Grid from "./components/Shopping/Grid";
+import Grid from "./components/Shopping/Products/Grid";
 import {
   BrowserRouter as Router,
   Routes as Switch,
@@ -10,12 +10,15 @@ import {
 } from "react-router-dom";
 import Screen from "./components/Shopping/Screen/Screen";
 import Item_Desc from "./components/Shopping/ItemDesc/Item_Desc";
+import ProductDetail from "./components/Shopping/Products/ProductDetail";
+import MyCart from "./components/Shopping/ShoppingCart/MyCart";
 
 function App() {
   return (
     <Router>
       <div>
         <Navbar />
+
         <Switch>
           <Route
             path="/"
@@ -28,7 +31,8 @@ function App() {
             }
           />
           <Route path="/grid" element={<Screen />} />
-          <Route path="/product" element={<Item_Desc />} />
+          <Route path="/product" element={<ProductDetail />} />
+          <Route path="/cart" element={<MyCart />} />
         </Switch>
       </div>
     </Router>
