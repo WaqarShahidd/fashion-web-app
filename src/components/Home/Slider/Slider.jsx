@@ -5,10 +5,10 @@ import { ChevronLeftIcon } from "@heroicons/react/outline";
 import "./style.css";
 
 const slideImages = [
-  "https://images-ext-1.discordapp.net/external/I3I3o7LsaEmSLsD44fY_aHMH7ehLnc4kdp5mOGqxT-s/%3Fixlib%3Drb-1.2.1%26ixid%3DMnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8%26auto%3Dformat%26fit%3Dcrop%26w%3D1469%26q%3D80/https/images.unsplash.com/photo-1524672353063-4f66ee1f385e?width=993&height=663",
-  "https://images-ext-1.discordapp.net/external/I3I3o7LsaEmSLsD44fY_aHMH7ehLnc4kdp5mOGqxT-s/%3Fixlib%3Drb-1.2.1%26ixid%3DMnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8%26auto%3Dformat%26fit%3Dcrop%26w%3D1469%26q%3D80/https/images.unsplash.com/photo-1524672353063-4f66ee1f385e?width=993&height=663",
-  "https://images-ext-1.discordapp.net/external/I3I3o7LsaEmSLsD44fY_aHMH7ehLnc4kdp5mOGqxT-s/%3Fixlib%3Drb-1.2.1%26ixid%3DMnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8%26auto%3Dformat%26fit%3Dcrop%26w%3D1469%26q%3D80/https/images.unsplash.com/photo-1524672353063-4f66ee1f385e?width=993&height=663",
-  "https://images-ext-1.discordapp.net/external/I3I3o7LsaEmSLsD44fY_aHMH7ehLnc4kdp5mOGqxT-s/%3Fixlib%3Drb-1.2.1%26ixid%3DMnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8%26auto%3Dformat%26fit%3Dcrop%26w%3D1469%26q%3D80/https/images.unsplash.com/photo-1524672353063-4f66ee1f385e?width=993&height=663",
+  "https://images-ext-2.discordapp.net/external/XWt5pglGElHd6KAv8BaeOv3128OuYu1vwwdZfvSgRUs/https/i.pinimg.com/564x/72/1b/ee/721beed767a8ffc4bf32da39744a3578.jpg",
+  "https://media.discordapp.net/attachments/719225618503565325/932351398467760148/21de76124db5aece19ad7c92d2b24e31.jpg",
+  "https://qa.khaadi.com/media/wysiwyg/khaadiqadesktopbanner16112020.jpg",
+  "https://roycollections.com/wp-content/uploads/2021/10/Wear-yourself-in-every-shades-of-winter-collection.jpg",
 ];
 
 const properties = {
@@ -31,27 +31,31 @@ const properties = {
 
 const Slideshow = () => {
   return (
-    <div className="pt-2 h-screen w-96 bg-slate-700 overflow-x-hidden overflow-y-hidden relative">
+    <div className="pt-2 h-screen w-full bg-slate-700 overflow-x-hidden overflow-y-hidden relative">
       <Slide easing="ease" {...properties}>
         <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slideImages[0]})` }}>
-            <span>Slide 1</span>
-          </div>
+          <div
+            className=" h-full w-full bg-center"
+            style={{ backgroundImage: `url(${slideImages[0]})` }}
+          ></div>
         </div>
         <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slideImages[1]})` }}>
-            <span>Slide 2</span>
-          </div>
+          <div
+            className="h-full w-full bg-center"
+            style={{ backgroundImage: `url(${slideImages[1]})` }}
+          ></div>
         </div>
         <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slideImages[2]})` }}>
-            <span>Slide 3</span>
-          </div>
+          <div
+            className="bg-center h-full w-full"
+            style={{ backgroundImage: `url(${slideImages[2]})` }}
+          ></div>
         </div>
         <div className="each-slide">
-          <div style={{ backgroundImage: `url(${slideImages[3]})` }}>
-            <span>Slide 3</span>
-          </div>
+          <div
+            className="bg-center h-full w-full"
+            style={{ backgroundImage: `url(${slideImages[3]})` }}
+          ></div>
         </div>
       </Slide>
     </div>
