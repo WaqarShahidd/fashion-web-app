@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 const sizes = [
   { name: "XXS", inStock: false },
@@ -49,7 +50,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductDetail() {
+function ProductDetail({ currentItem }) {
   const [active, setActive] = React.useState(true);
   const [activeKey, setActiveKey] = useState(null);
 
@@ -74,18 +75,27 @@ export default function ProductDetail() {
       <div className="lg:flex lg:flex-row grid grid-cols-1  pb-20">
         <div className="h-screen w-full flex-1 ">
           <img
-            src="https://hottopic.scene7.com/is/image/HotTopic/13509737_hi?$productMainDesktop$"
+            src={currentItem.image}
             alt=""
             className="h-5/6 w-full object-contain"
           />
         </div>
         <div className="flex-1 lg:pl-14 py-0 ">
-          <h1 className="font-bold text-2xl pb-2">
-            'not coming slow' Neon Green Tie-Dye Hoodie
-          </h1>
-          <p className="font-normal text-xl">350$</p>
+          <button
+            className="h-24 w-24"
+            onClick={() => console.log(currentItem)}
+          >
+            CHECK
+          </button>
+          <h1 className="font-bold text-2xl pb-2">{currentItem.title}</h1>
+          <p className="font-normal text-xl">{currentItem.price}</p>
           <div className="flex flex-col pt-5">
-            <span className="text-lg pb-2 pl-1">Color</span>
+            <span
+              onClick={() => console.log(currentItem.title)}
+              className="text-lg pb-2 pl-1"
+            >
+              Color
+            </span>
 
             <div className="flex flex-row ">
               {colors.map((item) => (
@@ -136,3 +146,11 @@ export default function ProductDetail() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    currentItem: state.shop.currentItem,
+  };
+};
+
+export default connect(mapStateToProps, null)(ProductDetail);

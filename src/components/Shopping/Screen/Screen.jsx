@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "../Products/Grid";
-import Grid_Items from "../Item_List/Grid_Items";
-function Screen() {
+import { connect } from "react-redux";
+
+export default function Screen() {
   return (
     <div className="pt-44 ">
       <div className="mx-20 relative z-10 flex items-baseline justify-between pb-6 border-b border-gray-200 ">
@@ -9,11 +10,17 @@ function Screen() {
           New Arrivals
         </h1>
       </div>
-      <div className="flex ">
+      <div className="flex">
         <Grid />
       </div>
     </div>
   );
 }
 
-export default Screen;
+// const mapStateToProps = (state) => {
+//   return {
+//     products: state.shop.products,
+//   };
+// };
+
+// export default connect(mapStateToProps) (Screen);

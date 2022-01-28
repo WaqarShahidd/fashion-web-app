@@ -1,32 +1,40 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import {
   MenuIcon,
   ShoppingBagIcon,
   SearchIcon,
 } from "@heroicons/react/outline";
+import Drawer from "@material-ui/core/Drawer";
+import Badge from "@material-ui/core/Badge";
+import IconButton from "@material-ui/core/IconButton";
 import { Popover, Transition } from "@headlessui/react";
 import { data } from "./navbarData";
 import { XIcon } from "@heroicons/react/outline";
 import "../../index.css";
 import { Link } from "react-router-dom";
 import Grid from "../Shopping/Products/Grid";
+import CartDialog from "../Shopping/Cart/CartDialog";
 
-const Navbar = () => {
+import { connect } from "react-redux";
+
+const Navbar = ({ cart }) => {
+  const [cartCount, setCartCount] = useState(0);
+
   const [open, setOpen] = useState(false);
-  const [x, setX] = useState(true);
+
+  const [cartOpen, setCartOpen] = useState(false);
+
+  useEffect(() => {
+    let count = 0;
+    cart.forEach((item) => {
+      count += item.qty;
+    });
+    setCartCount(count);
+  }, [cart, cartCount, setCartCount]);
 
   // h-20 flex items-center justify-center text-white bg-gradient-to-b from-slate-500 hover:bg-black hover:from-black
   return (
     <div className="fixed z-50 w-full">
-      {x && (
-        <div className=" bg-indigo-800 h-10 flex w-full flex-row items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8 z-50">
-          <p className="mx-auto">Get free delivery on orders over Rs. 2000</p>
-          <XIcon
-            className=" h-4 w-4 cursor-pointer"
-            onClick={() => setX(false)}
-          />
-        </div>
-      )}
       <header className="h-24 flex w-full absolute inset-x-0 bg-white ">
         <nav className=" items-center justify-center">
           <div className="justify-between flex  mx-20 absolute inset-0 border-b-2 border-slate-400 ">
@@ -144,13 +152,29 @@ const Navbar = () => {
                   Create account
                 </a>
               </div>
-              <div className="ml-4 flex flex-row lg:ml-6">
-                <a href="/">
-                  <ShoppingBagIcon className="flex-shrink-0 h-6 w-6 mr-4 text-gray-600 group-hover:text-gray-500" />
-                </a>
-                <a href="/">
+              <div className="ml-6 flex lg:flex-0.5 lg:space-x-4 flex-row  lg:ml-6">
+                <Drawer
+                  anchor="right"
+                  open={cartOpen}
+                  onClose={() => setCartOpen(false)}
+                >
+                  <CartDialog />
+                </Drawer>
+                <IconButton
+                  className="h-6 w-6"
+                  onClick={() => setCartOpen(true)}
+                >
+                  <Badge
+                    className="p-0 -right-1/3"
+                    badgeContent={cartCount}
+                    color="secondary"
+                  >
+                    <ShoppingBagIcon className="flex-shrink-0 h-6 w-6 text-gray-600 group-hover:text-gray-500" />
+                  </Badge>
+                </IconButton>
+                <IconButton className="h-6 w-6">
                   <SearchIcon className="flex-shrink-0 h-6 w-6 text-gray-600 group-hover:text-gray-500" />
-                </a>
+                </IconButton>
               </div>
             </div>
           </div>
@@ -160,4 +184,10 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    cart: state.shop.cart,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);
