@@ -35,27 +35,27 @@ const Slideshow = () => {
       <Slide easing="ease" {...properties}>
         <div className="each-slide">
           <div
-            className=" h-full w-full bg-center"
+            className="h-full w-full bg-center"
             style={{ backgroundImage: `url(${slideImages[0]})` }}
-          ></div>
+          />
         </div>
         <div className="each-slide">
           <div
             className="h-full w-full bg-center"
             style={{ backgroundImage: `url(${slideImages[1]})` }}
-          ></div>
+          />
         </div>
         <div className="each-slide">
           <div
             className="bg-center h-full w-full"
             style={{ backgroundImage: `url(${slideImages[2]})` }}
-          ></div>
+          />
         </div>
         <div className="each-slide">
           <div
             className="bg-center h-full w-full"
             style={{ backgroundImage: `url(${slideImages[3]})` }}
-          ></div>
+          />
         </div>
       </Slide>
     </div>

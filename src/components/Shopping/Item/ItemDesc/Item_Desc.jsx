@@ -1,5 +1,4 @@
 import React from "react";
-import Magnifier from "react-glass-magnifier";
 
 function Item_Desc() {
   return (
@@ -68,17 +67,7 @@ function Item_Desc() {
             <h4 className="text-l">Lifetime Guarantee</h4>
           </div>
         </div>
-        <div class="flex-1  bg1/2 lg:row-start-1 sm:row-start-1 ">
-          <Magnifier
-            imageUrl="https://static-01.daraz.pk/p/5936a1d46f92a49dc4b7b7a630e28b9d.jpg"
-            imgAlt="small image"
-            zoomFactor={3}
-            glassDimension={200}
-            largeImageUrl="https://static-01.daraz.pk/p/5936a1d46f92a49dc4b7b7a630e28b9d.jpg"
-            glassBorderColor="transparent"
-            glassBorderWidth={2}
-          />
-        </div>
+        <div class="flex-1  bg1/2 lg:row-start-1 sm:row-start-1 "></div>
       </div>
     </div>
   );

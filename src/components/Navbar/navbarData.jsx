@@ -1,4 +1,4 @@
-import Grid from "../Shopping/Grid";
+import Grid from "../Shopping/Products/Grid";
 
 export const data = {
   catalog: [
@@ -56,13 +56,14 @@ export const data = {
         {
           name: "New Arrivals",
           href: "#",
-          imageSrc: "",
+          imageSrc:
+            "https://assets.vogue.com/photos/5fdbb0bf0545513cfcbc17ad/master/pass/VO0121_Collections_01.jpg",
         },
         {
           name: "Shoes",
           href: "#",
           imageSrc:
-            "https://i.pinimg.com/474x/95/d4/86/95d4863f81b13bd31b00c7fd95e09060.jpg",
+            "https://i.pinimg.com/564x/d1/ff/d9/d1ffd96e596e61b4a47cc829a84ce92f.jpg",
         },
       ],
       categories: [

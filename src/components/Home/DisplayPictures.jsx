@@ -35,7 +35,7 @@ const DisplayPictures = () => {
   return (
     <div className="h-full w-full ">
       {data.map((item) => (
-        <div className="flex relative ">
+        <div key={item.id} className="flex relative ">
           <img
             className="flex lg:h-screen md:h-full sm:h-full w-full object-cover"
             src={item.img}
