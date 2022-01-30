@@ -1,5 +1,6 @@
 import React from "react";
 import "../../index.css";
+import { Link } from "react-router-dom";
 
 const data = [
   {
@@ -48,9 +49,11 @@ const DisplayPictures = () => {
             <p className="lg:text-7xl md:text-7xl sm:text-7xl text-gray-50 font-m  ">
               {item.title}
             </p>
-            <button className="mt-6 lg:h-14 md:h-12 sm:h-12 lg:w-36 md:w-28 sm:w-24 lg:text-xl md:text-base sm:text-sm  text-white border-2 bg-slate-100 bg-opacity-10 hover:bg-[#1b1b1b] hover:border-[#1b1b1b]">
-              DISCOVER
-            </button>
+            <Link to={`/grid/2/3`}>
+              <button className="mt-6 lg:h-14 md:h-12 sm:h-12 lg:w-36 md:w-28 sm:w-24 lg:text-xl md:text-base sm:text-sm  text-white border-2 bg-slate-100 bg-opacity-10 hover:bg-[#1b1b1b] hover:border-[#1b1b1b]">
+                DISCOVER
+              </button>
+            </Link>
           </div>
         </div>
       ))}

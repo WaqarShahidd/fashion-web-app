@@ -1,47 +1,50 @@
 import * as actionTypes from "./shoppingTypes";
 
-const INITIAL_STATE = {
-  products: [],
-  cart: [],
-  currentItem: [],
-};
+const cart = [];
 
-const shopReducer = (state = INITIAL_STATE, action) => {
+const shopReducer = (state = cart, action) => {
+  const product = action.payload;
   switch (action.type) {
     case actionTypes.ADD_TO_CART:
-      const item = state.products.find((prod) => prod.id === action.payload.id);
-      const inCart = state.cart.find((item) =>
-        item.id === action.payload.id ? true : false
-      );
-      return {
-        ...state,
-        cart: inCart
-          ? state.cart.map((item) =>
-              item.id === action.payload.id
-                ? { ...item, qty: item.qty + 1 }
-                : item
-            )
-          : [...state.cart, { ...item, qty: 1 }],
-      };
-    case actionTypes.REMOVE_FROM_CART:
-      return {
-        ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload.id),
-      };
-    case actionTypes.ADJUST_QTY:
-      return {
-        ...state,
-        cart: state.cart.map((item) =>
-          item.id === action.payload.id
-            ? { ...item, qty: +action.payload.qty }
+      const exist = state.find((item) => item.id === product.id);
+      if (exist) {
+        return state.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                qty: item.qty + 1,
+                total: (item.total = item.price * item.qty),
+              }
             : item
-        ),
-      };
-    case actionTypes.LOAD_CURRENT_ITEM:
-      return {
-        ...state,
-        currentItem: item.payload,
-      };
+        );
+      } else {
+        const product = action.payload;
+
+        return [
+          ...state,
+          {
+            ...product,
+            qty: 1,
+            total: (product.total = product.price),
+            subtotal: product.subtotal,
+          },
+        ];
+      }
+    case actionTypes.REMOVE_FROM_CART:
+      const exist1 = state.find((item) => item.id === product.id);
+      if (exist1.qty) return state.filter((item) => item.id !== exist1.id);
+      break;
+
+    case actionTypes.ADJUST_QTY:
+      const exist2 = state.find((item) => item.id === product.id);
+      if (exist2.qty === 1) {
+        return state.filter((item) => item.id !== exist2.id);
+      } else {
+        return state.map((item) =>
+          item.id === product.id ? { ...item, qty: item.qty - 1 } : item
+        );
+      }
+
     default:
       return state;
   }

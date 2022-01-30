@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../Redux/Shopping/shoppingActions";
 
 const sizes = [
   { name: "XXS", inStock: false },
@@ -51,8 +54,20 @@ function classNames(...classes) {
 }
 
 function ProductDetail({ currentItem }) {
-  const [active, setActive] = React.useState(true);
+  const { id } = useParams();
+  const [product, setProduct] = React.useState(true);
   const [activeKey, setActiveKey] = useState(null);
+
+  const dispatch = useDispatch();
+  const addProduct = (product) => {
+    dispatch(addToCart(product));
+  };
+
+  const url = `https://fashionstore.technologiasolutions.com/api/items/${id}`;
+
+  React.useEffect(() => {
+    axios.get(url).then((json) => setProduct(json.data));
+  }, [url]);
 
   const SizeDetail = ({ id, name, isActive }) => {
     return (
@@ -75,23 +90,17 @@ function ProductDetail({ currentItem }) {
       <div className="lg:flex lg:flex-row grid grid-cols-1  pb-20">
         <div className="h-screen w-full flex-1 ">
           <img
-            src={currentItem.image}
+            src={product.image}
             alt=""
             className="h-5/6 w-full object-contain"
           />
         </div>
         <div className="flex-1 lg:pl-14 py-0 ">
-          <button
-            className="h-24 w-24"
-            onClick={() => console.log(currentItem)}
-          >
-            CHECK
-          </button>
-          <h1 className="font-bold text-2xl pb-2">{currentItem.title}</h1>
-          <p className="font-normal text-xl">{currentItem.price}</p>
+          <h1 className="font-bold text-2xl pb-2">{product.name}</h1>
+          <p className="font-normal text-xl">${product.price}</p>
           <div className="flex flex-col pt-5">
             <span
-              onClick={() => console.log(currentItem.title)}
+              onClick={() => console.log(product.title)}
               className="text-lg pb-2 pl-1"
             >
               Color
@@ -133,24 +142,28 @@ function ProductDetail({ currentItem }) {
               <br /> -Unisex
             </p>
           </div>
-          <Link to="/cart">
+          <div className="mt-10 flex flex-row gap-4 ">
             <button
+              onClick={() => addProduct(product)}
               type="submit"
-              className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className=" w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Add to bag
             </button>
-          </Link>
+            <Link className="w-full" to={`/checkout/${product.id}`}>
+              <button
+                onClick={() => addProduct(product)}
+                type="submit"
+                className=" w-full bg-white border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-600 hover:bg-slate-300 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Proceed to Checkout
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentItem: state.shop.currentItem,
-  };
-};
-
-export default connect(mapStateToProps, null)(ProductDetail);
+export default ProductDetail;
