@@ -24,9 +24,12 @@ export const data = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "Shirt", href: "/Grid" },
-            { name: "Jeans", href: "/" },
-            { name: "Jackets", href: "/" },
+            { id: 1, name: "Shirt", href: "/grid" },
+            { id: 2, name: "Shoes", href: "/grid" },
+            { id: 3, name: "Bag", href: "/grid" },
+            { id: 4, name: "Fragrance", href: "/grid" },
+            { id: 5, name: "Watch", href: "/grid" },
+            { id: 6, name: "Jacket", href: "/grid" },
           ],
         },
         {
@@ -71,9 +74,12 @@ export const data = {
           id: "clothing",
           name: "Clothing",
           items: [
-            { name: "Shirt", href: "/" },
-            { name: "Jeans", href: "/" },
-            { name: "Jackets", href: "/" },
+            { id: 1, name: "Shirt", href: "/grid" },
+            { id: 2, name: "Shoes", href: "/grid" },
+            { id: 3, name: "Bag", href: "/grid" },
+            { id: 4, name: "Fragrance", href: "/grid" },
+            { id: 5, name: "Watch", href: "/grid" },
+            { id: 6, name: "Jacket", href: "/grid" },
           ],
         },
         {
@@ -99,12 +105,6 @@ export const data = {
     {
       id: "3",
       name: "Art of Living",
-      categories: [],
-      featured: [],
-    },
-    {
-      id: "4",
-      name: "New",
       categories: [],
       featured: [],
     },

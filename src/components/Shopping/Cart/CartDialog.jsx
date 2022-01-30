@@ -4,8 +4,12 @@ import { XIcon } from "@heroicons/react/outline";
 import { connect } from "react-redux";
 import {
   removeFromCart,
+  addToCart,
   adjustQty,
 } from "../../../Redux/Shopping/shoppingActions";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -35,38 +39,21 @@ const products = [
   // More products...
 ];
 
-function CartDialog({ cart, removeFromCart, adjustQty }) {
-  const [open, setOpen] = useState(true);
+function CartDialog() {
+  const state = useSelector((state) => state.shopReducer);
 
-  const [count, setCount] = useState(cart.qty);
+  let [ctotal, setCtotal] = useState(0);
+  const dispatch = useDispatch();
 
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalItem, setTotalItem] = useState(0);
-
-  useEffect(() => {
-    let items = 0;
-    let price = 0;
-
-    cart.forEach((item) => {
-      items += item.qty;
-      price += item.qty * item.price;
-    });
-    setTotalItem(items);
-    setTotalPrice(price);
-  }, [cart, totalPrice, setTotalPrice, totalItem, setTotalItem]);
-
-  const onChange = (e) => {
-    console.log(e.target.value);
-    // adjustQty(cart.id, e.target.value);
-  };
-  let incrementCount = (e) => {
-    setCount(e.target.value + 1);
-    adjustQty(cart.id, e.target.value);
+  const handleRemove = (item) => {
+    dispatch(removeFromCart(item));
   };
 
-  let decrementCount = (e) => {
-    setCount(e.target.value - 1);
-    adjustQty(cart.id, e.target.value);
+  const handleIncrement = (item) => {
+    dispatch(addToCart(item));
+  };
+  const handleDecrement = (item) => {
+    dispatch(adjustQty(item));
   };
 
   return (
@@ -80,12 +67,12 @@ function CartDialog({ cart, removeFromCart, adjustQty }) {
           <div className="mt-8">
             <div className="flow-root ">
               <ul className="-my-6  divide-y divide-gray-200 ">
-                {cart.map((product) => (
-                  <li key={product.id} className="py-6 flex">
+                {state.map((cartItems) => (
+                  <li key={cartItems.id} className="py-6 flex">
                     <div className="flex w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                       <img
-                        src={product.image}
-                        alt={product.imageAlt}
+                        src={cartItems.image}
+                        alt={cartItems.imageAlt}
                         className="w-full h-full object-center object-cover"
                       />
                     </div>
@@ -93,33 +80,35 @@ function CartDialog({ cart, removeFromCart, adjustQty }) {
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3>
-                            <a href={product.href}>{product.name}</a>
+                            <a href={cartItems.href}>{cartItems.name}</a>
                           </h3>
-                          <p className="ml-4">${product.price}</p>
+                          <p className="ml-4">
+                            ${cartItems.price * cartItems.qty}
+                          </p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
-                          {product.color}
+                          {cartItems.color}
                         </p>
                       </div>
                       <div className="flex-1 flex items-end justify-between text-sm">
                         <div className=" flex-row flex">
                           <button
+                            onClick={() => handleDecrement(cartItems)}
                             className="h-6 w-6 mr-8 bg-gray-200"
-                            onClick={() => onChange()}
                           >
                             -
                           </button>
-                          <p className="text-gray-500 mr-8">{count}</p>
+                          <p className="text-gray-500 mr-8">{cartItems.qty}</p>
                           <button
+                            onClick={() => handleIncrement(cartItems)}
                             className="h-6 w-6  bg-gray-200"
-                            onClick={() => onChange}
                           >
                             +
                           </button>
                         </div>
                         <div className="flex">
                           <button
-                            onClick={() => removeFromCart(product.id)}
+                            onClick={() => handleRemove(cartItems)}
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                           >
@@ -138,31 +127,31 @@ function CartDialog({ cart, removeFromCart, adjustQty }) {
         <div className="border-t  border-gray-200 py-6 px-4 sm:px-6 w-full">
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Subtotal</p>
-            <p>$ {totalPrice}</p>
+            <p>${ctotal} </p>
           </div>
           <p className="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.
           </p>
-          <div className="mt-6">
-            <a
-              href="."
-              className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              Checkout
-            </a>
-          </div>
-          <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
-            <p>
-              or{" "}
-              <button
-                type="button"
-                className="text-indigo-600 font-medium hover:text-indigo-500"
-                onClick={() => setOpen(false)}
-              >
-                Continue Shopping
-                <span aria-hidden="true"> &rarr;</span>
-              </button>
+          <div
+            className="mt-6"
+            onClick={() => {
+              setCtotal((ctotal = 0));
+              state.forEach((element) => {
+                setCtotal((ctotal += element.price * element.qty));
+                element.total = ctotal;
+              });
+            }}
+          >
+            <p className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 cursor-pointer">
+              Calculate Total
             </p>
+          </div>
+          <div className="mt-2">
+            <Link to={`/checkout/${state.id}`}>
+              <p className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-indigo-600 bg-white border-indigo-600 hover:bg-slate-100">
+                Checkout
+              </p>
+            </Link>
           </div>
         </div>
       </div>
@@ -170,16 +159,4 @@ function CartDialog({ cart, removeFromCart, adjustQty }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    cart: state.shop.cart,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    removeFromCart: (id) => dispatch(removeFromCart(id)),
-    adjustQty: (id, value) => dispatch(adjustQty(id, value)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(CartDialog);
+export default CartDialog;

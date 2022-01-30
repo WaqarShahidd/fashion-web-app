@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import {
-  addToCart,
-  loadCurrentItem,
-} from "../../../Redux/Shopping/shoppingActions";
-import { ShoppingBagIcon } from "@heroicons/react/outline";
-import { setProducts } from "../../../Redux/Shopping/shoppingReducers";
+import { addToCart } from "../../../Redux/Shopping/shoppingActions";
+import { ShoppingBagIcon, SearchIcon } from "@heroicons/react/outline";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
 // const product = [
 //   {
 //     id: 1,
@@ -40,27 +35,38 @@ import axios from "axios";
 //   },
 // ];
 
-function Grid({ addToCart, loadCurrentItem }) {
+function Grid({ catalogId, categoryId }) {
+  const dispatch = useDispatch();
+  const [loading, setloading] = useState(false);
+  const addProduct = (product) => {
+    dispatch(addToCart(product));
+  };
+
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const url = "https://fashionstore.technologiasolutions.com/api/items";
+  const url = `https://fashionstore.technologiasolutions.com/api/Items/Class?catalog=${catalogId}&caegory=${categoryId}`;
 
   React.useEffect(() => {
     axios.get(url).then((json) => setProducts(json.data));
+    setloading(false);
   }, [url]);
 
   return (
-    <div className=" w-full mx-20">
-      <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-full lg:px-8">
-        <input
-          className="border-2"
-          type={"text"}
-          placeholder={"hello"}
-          onChange={(event) => {
-            setSearchTerm(event.target.value);
-          }}
-        />
+    <div className="w-full mx-20">
+      <div className="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-full lg:px-8 ">
+        <div className="flex flex-row w-full justify-center items-center mb-12 ">
+          <input
+            className="border-b-2 w-full h-12"
+            type="text"
+            placeholder="SEARCH PRODUCTS..."
+            onChange={(event) => {
+              event.preventDefault();
+              setSearchTerm(event.target.value);
+            }}
+          />
+          <SearchIcon className="flex-shrink-0  h-6 w-6 text-gray-600 group-hover:text-gray-500" />
+        </div>
         {products && (
           <div className="grid grid-cols-1 gap-y-20 gap-x-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:gap-x-8  ">
             {products
@@ -73,12 +79,6 @@ function Grid({ addToCart, loadCurrentItem }) {
                 <div key={prod.id} className=" relative">
                   <Link to={`/product/${prod.id}`}>
                     <div className="w-full min-h-96  bg-gray-200 aspect-w-1 aspect-h-1 rounded-t-md overflow-hidden hover:opacity-75 lg:h-96 md:h-96 sm:h-96">
-                      <button
-                        className="h-24 w-24"
-                        onClick={() => loadCurrentItem(products)}
-                      >
-                        CLICK
-                      </button>
                       <img
                         src={prod.image}
                         alt={prod.href}
@@ -86,7 +86,7 @@ function Grid({ addToCart, loadCurrentItem }) {
                       />
                     </div>
                   </Link>
-                  <div className="mt-4 flex flex-row  ">
+                  <div className="mt-4 flex flex-row justify-between ">
                     <div className="flex flex-col relative">
                       <h3 className="pb-2 text-sm font-bold  text-gray-700 w-48 lg:w-44 md:w-56 sm:96 text-ellipsis whitespace-nowrap overflow-hidden">
                         {prod.name}
@@ -96,12 +96,14 @@ function Grid({ addToCart, loadCurrentItem }) {
                       </p>
                     </div>
                     <button
-                      onClick={() => addToCart(prod.id)}
+                      onClick={() => addProduct(prod)}
                       type="submit"
-                      className="w-44 h-12 bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                      className="h-12 w-20 lg:w-20 lg:h-12 md:w-20 md:h-10  bg-slate-700 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
                     >
-                      <p className="w-24 ">Add to bag</p>
-                      <ShoppingBagIcon className="h-4 w-4 " color="white" />
+                      <ShoppingBagIcon
+                        className="h-10 w-10 lg:h-20 lg:w-20 md:h-6 md:w-6 sm:h-11 sm:w-11"
+                        color="white"
+                      />
                     </button>
                   </div>
                 </div>
@@ -110,45 +112,7 @@ function Grid({ addToCart, loadCurrentItem }) {
         )}
       </div>
     </div>
-
-    // <div className="mx-16 max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-full md:max-w-6xl lg:px-8">
-    //   <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 lg:gap-y-6 md:gap-y-14 gap-y-20 gap-x-6  ">
-    //     {product.map((item) => (
-    //       <div key={item.key} className="group relative">
-    //         <div className="bg-gray-200 w-full min-h-96 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-96 md:h-full sm:h-full">
-    //           <img
-    //             src={item.image}
-    //             alt=""
-    //             className="object-center object-contain h-full w-full lg:h-full lg:w-full "
-    //           />
-    //         </div>
-    //         <div className="mt-4 flex justify-between px-2">
-    //           <h3 className="text-sm w-56 lg:text-xl md:text-sm font-medium text-gray-700 lg:w-48 md:w-56 text-ellipsis whitespace-nowrap overflow-hidden ">
-    //             {item.name}
-    //           </h3>
-
-    //           <p className="text-md font-medium text-gray-900 lg:w-12  text-ellipsis  ">
-    //             {item.price}
-    //           </p>
-    //         </div>
-    //       </div>
-    //     ))}
-    //   </div>
-    // </div>
   );
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     products: state.shop.products,
-//   };
-// };
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToCart: (id) => dispatch(addToCart(id)),
-    loadCurrentItem: (item) => dispatch(loadCurrentItem(item)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Grid);
+export default Grid;

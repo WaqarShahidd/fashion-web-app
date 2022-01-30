@@ -1,40 +1,32 @@
-import React, { useState, Fragment, useEffect } from "react";
-import {
-  MenuIcon,
-  ShoppingBagIcon,
-  SearchIcon,
-} from "@heroicons/react/outline";
+import React, { useState, Fragment } from "react";
+import { MenuIcon, ShoppingBagIcon } from "@heroicons/react/outline";
 import Drawer from "@material-ui/core/Drawer";
 import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
 import { Popover, Transition } from "@headlessui/react";
 import { data } from "./navbarData";
-import { XIcon } from "@heroicons/react/outline";
 import "../../index.css";
 import { Link } from "react-router-dom";
-import Grid from "../Shopping/Products/Grid";
 import CartDialog from "../Shopping/Cart/CartDialog";
+import { useSelector } from "react-redux";
 
-import { connect } from "react-redux";
-
-const Navbar = ({ cart }) => {
-  const [cartCount, setCartCount] = useState(0);
+const Navbar = ({ disabled }) => {
+  const state = useSelector((state) => state.shopReducer);
 
   const [open, setOpen] = useState(false);
 
   const [cartOpen, setCartOpen] = useState(false);
 
-  useEffect(() => {
-    let count = 0;
-    cart.forEach((item) => {
-      count += item.qty;
-    });
-    setCartCount(count);
-  }, [cart, cartCount, setCartCount]);
-
   // h-20 flex items-center justify-center text-white bg-gradient-to-b from-slate-500 hover:bg-black hover:from-black
   return (
-    <div className="fixed z-50 w-full">
+    <div
+      // style={
+      //   disabled
+      //     ? { display: "none" }
+      //     : { position: "fixed", width: "100%", zIndex: "50" }
+      // }
+      className="fixed z-50 w-full"
+    >
       <header className="h-24 flex w-full absolute inset-x-0 bg-white ">
         <nav className=" items-center justify-center">
           <div className="justify-between flex  mx-20 absolute inset-0 border-b-2 border-slate-400 ">
@@ -92,7 +84,9 @@ const Navbar = ({ cart }) => {
                                       <ul className="mt-6 space-y-6 text-gray-700">
                                         {category.items.map((item) => (
                                           <li key={item.name} className="flex">
-                                            <Link to="/grid">
+                                            <Link
+                                              to={`grid/${catalog.id}/${item.id}`}
+                                            >
                                               <a
                                                 href="/"
                                                 className="hover:text-gray-600"
@@ -138,19 +132,18 @@ const Navbar = ({ cart }) => {
             {/* CART & Sign In */}
             <div className="lg:mr-4 mr-2 flex items-center">
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                <a
-                  href="/"
+                <p
+                  onClick={() => console.log(disabled)}
                   className="text-sm font-medium text-gray-800 hover:text-gray-500"
                 >
                   Sign in
-                </a>
+                </p>
                 <span className="h-6 w-px bg-gray-800" />
-                <a
-                  href="/"
-                  className="text-sm font-medium text-gray-800 hover:text-gray-500"
-                >
-                  Create account
-                </a>
+                <Link to="/form">
+                  <p className="text-sm font-medium text-gray-800 hover:text-gray-500">
+                    Create account
+                  </p>
+                </Link>
               </div>
               <div className="ml-6 flex lg:flex-0.5 lg:space-x-4 flex-row  lg:ml-6">
                 <Drawer
@@ -166,17 +159,12 @@ const Navbar = ({ cart }) => {
                 >
                   <Badge
                     className="p-0 -right-1/3"
-                    badgeContent={cartCount}
+                    badgeContent={state.length}
                     color="secondary"
                   >
                     <ShoppingBagIcon className="flex-shrink-0 h-6 w-6 text-gray-600 group-hover:text-gray-500" />
                   </Badge>
                 </IconButton>
-                <div>
-                  <IconButton className="h-6 w-6">
-                    <SearchIcon className="flex-shrink-0 h-6 w-6 text-gray-600 group-hover:text-gray-500" />
-                  </IconButton>
-                </div>
               </div>
             </div>
           </div>
@@ -186,10 +174,4 @@ const Navbar = ({ cart }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    cart: state.shop.cart,
-  };
-};
-
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;

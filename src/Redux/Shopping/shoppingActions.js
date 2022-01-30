@@ -1,37 +1,23 @@
 import * as actionTypes from "./shoppingTypes";
 
-export const setProducts = (products) => {
-  return {
-    type: actionTypes.SET_PRODUCTS,
-    payLoad: products,
-  };
-};
-
-export const addToCart = (itemID) => {
+export const addToCart = (product) => {
   return {
     type: actionTypes.ADD_TO_CART,
-    payload: {
-      id: itemID,
-    },
+    payload: product,
   };
 };
 
-export const removeFromCart = (itemID) => {
+export const removeFromCart = (product) => {
   return {
     type: actionTypes.REMOVE_FROM_CART,
-    payload: {
-      id: itemID,
-    },
+    payload: product,
   };
 };
 
-export const adjustQty = (itemID, value) => {
+export const adjustQty = (product) => {
   return {
     type: actionTypes.ADJUST_QTY,
-    payload: {
-      id: itemID,
-      qty: value,
-    },
+    payload: product,
   };
 };
 

@@ -5,10 +5,10 @@ import { ChevronLeftIcon } from "@heroicons/react/outline";
 import "./style.css";
 
 const slideImages = [
-  "https://images-ext-2.discordapp.net/external/XWt5pglGElHd6KAv8BaeOv3128OuYu1vwwdZfvSgRUs/https/i.pinimg.com/564x/72/1b/ee/721beed767a8ffc4bf32da39744a3578.jpg",
-  "https://media.discordapp.net/attachments/719225618503565325/932351398467760148/21de76124db5aece19ad7c92d2b24e31.jpg",
-  "https://qa.khaadi.com/media/wysiwyg/khaadiqadesktopbanner16112020.jpg",
-  "https://roycollections.com/wp-content/uploads/2021/10/Wear-yourself-in-every-shades-of-winter-collection.jpg",
+  "https://futuredeluxe.com/wp-content/uploads/2020/01/converse_twist_01.jpg?x53177",
+  "https://i.pinimg.com/originals/23/dd/7e/23dd7e13590119d7e975a7662ebb6676.png",
+  "https://cdn.shopify.com/s/files/1/1491/3294/files/PCC0002_Website_Banners_Final_2000x10003_6fa281ba-ccf8-45f5-9d3e-0df3de5aac6c_1600x.jpg?v=1609804157",
+  "https://i.pinimg.com/originals/3d/1e/03/3d1e03e6d57b72dd063429c676dac234.png",
 ];
 
 const properties = {
