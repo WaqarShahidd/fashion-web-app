@@ -1,24 +1,9 @@
 import * as actionTypes from "./shoppingTypes";
 
 const INITIAL_STATE = {
-  products: [
-    {
-      id: 1,
-      name: "Hoodie",
-      image:
-        "https://images.pexels.com/photos/6310924/pexels-photo-6310924.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      price: "$350",
-    },
-    {
-      id: 2,
-      name: "White Joggers",
-      image:
-        "https://cdn.discordapp.com/attachments/610915006296621086/932348179930812436/pexels-photo-5788986.png",
-      price: "$350",
-    },
-  ],
+  products: [],
   cart: [],
-  currentItem: null,
+  currentItem: [],
 };
 
 const shopReducer = (state = INITIAL_STATE, action) => {
@@ -48,7 +33,7 @@ const shopReducer = (state = INITIAL_STATE, action) => {
         ...state,
         cart: state.cart.map((item) =>
           item.id === action.payload.id
-            ? { ...item, qty: action.payload.qty }
+            ? { ...item, qty: +action.payload.qty }
             : item
         ),
       };

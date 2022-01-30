@@ -1,5 +1,12 @@
 import * as actionTypes from "./shoppingTypes";
 
+export const setProducts = (products) => {
+  return {
+    type: actionTypes.SET_PRODUCTS,
+    payLoad: products,
+  };
+};
+
 export const addToCart = (itemID) => {
   return {
     type: actionTypes.ADD_TO_CART,

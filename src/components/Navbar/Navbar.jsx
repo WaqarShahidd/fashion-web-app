@@ -172,9 +172,11 @@ const Navbar = ({ cart }) => {
                     <ShoppingBagIcon className="flex-shrink-0 h-6 w-6 text-gray-600 group-hover:text-gray-500" />
                   </Badge>
                 </IconButton>
-                <IconButton className="h-6 w-6">
-                  <SearchIcon className="flex-shrink-0 h-6 w-6 text-gray-600 group-hover:text-gray-500" />
-                </IconButton>
+                <div>
+                  <IconButton className="h-6 w-6">
+                    <SearchIcon className="flex-shrink-0 h-6 w-6 text-gray-600 group-hover:text-gray-500" />
+                  </IconButton>
+                </div>
               </div>
             </div>
           </div>

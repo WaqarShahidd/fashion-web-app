@@ -2,6 +2,10 @@ import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { connect } from "react-redux";
+import {
+  removeFromCart,
+  adjustQty,
+} from "../../../Redux/Shopping/shoppingActions";
 
 const products = [
   {
@@ -31,32 +35,51 @@ const products = [
   // More products...
 ];
 
-function CartDialog({ cart }) {
+function CartDialog({ cart, removeFromCart, adjustQty }) {
   const [open, setOpen] = useState(true);
+
+  const [count, setCount] = useState(cart.qty);
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalItem, setTotalItem] = useState(0);
 
+  useEffect(() => {
+    let items = 0;
+    let price = 0;
+
+    cart.forEach((item) => {
+      items += item.qty;
+      price += item.qty * item.price;
+    });
+    setTotalItem(items);
+    setTotalPrice(price);
+  }, [cart, totalPrice, setTotalPrice, totalItem, setTotalItem]);
+
+  const onChange = (e) => {
+    console.log(e.target.value);
+    // adjustQty(cart.id, e.target.value);
+  };
+  let incrementCount = (e) => {
+    setCount(e.target.value + 1);
+    adjustQty(cart.id, e.target.value);
+  };
+
+  let decrementCount = (e) => {
+    setCount(e.target.value - 1);
+    adjustQty(cart.id, e.target.value);
+  };
+
   return (
     <div className="w-screen max-w-md">
-      <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
-        <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
+      <div className="h-screen flex flex-col bg-white shadow-xl overflow-y-scroll">
+        <div className="flex-1 py-6 overflow-y-auto px-4 sm:px-6 ">
           <div className="flex items-start justify-between">
-            <h1 className="text-lg font-medium text-gray-900">Shopping cart</h1>
-            <div className="ml-3 h-7 flex items-center">
-              <button
-                type="button"
-                className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                onClick={() => setOpen(false)}
-              >
-                <XIcon className="h-6 w-6" />
-              </button>
-            </div>
+            <h1 className="text-xl font-bold text-gray-900">Shopping cart</h1>
           </div>
 
           <div className="mt-8">
-            <div className="flow-root">
-              <ul className="-my-6 divide-y divide-gray-200">
+            <div className="flow-root ">
+              <ul className="-my-6  divide-y divide-gray-200 ">
                 {cart.map((product) => (
                   <li key={product.id} className="py-6 flex">
                     <div className="flex w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
@@ -72,17 +95,31 @@ function CartDialog({ cart }) {
                           <h3>
                             <a href={product.href}>{product.name}</a>
                           </h3>
-                          <p className="ml-4">{product.price}</p>
+                          <p className="ml-4">${product.price}</p>
                         </div>
                         <p className="mt-1 text-sm text-gray-500">
                           {product.color}
                         </p>
                       </div>
                       <div className="flex-1 flex items-end justify-between text-sm">
-                        <p className="text-gray-500">Quantity: {product.qty}</p>
-
+                        <div className=" flex-row flex">
+                          <button
+                            className="h-6 w-6 mr-8 bg-gray-200"
+                            onClick={() => onChange()}
+                          >
+                            -
+                          </button>
+                          <p className="text-gray-500 mr-8">{count}</p>
+                          <button
+                            className="h-6 w-6  bg-gray-200"
+                            onClick={() => onChange}
+                          >
+                            +
+                          </button>
+                        </div>
                         <div className="flex">
                           <button
+                            onClick={() => removeFromCart(product.id)}
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                           >
@@ -98,17 +135,17 @@ function CartDialog({ cart }) {
           </div>
         </div>
 
-        <div className="border-t border-gray-200 py-6 px-4 sm:px-6 bottom-0 absolute w-full">
+        <div className="border-t  border-gray-200 py-6 px-4 sm:px-6 w-full">
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Subtotal</p>
-            <p>$155</p>
+            <p>$ {totalPrice}</p>
           </div>
           <p className="mt-0.5 text-sm text-gray-500">
             Shipping and taxes calculated at checkout.
           </p>
           <div className="mt-6">
             <a
-              href="#"
+              href="."
               className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
             >
               Checkout
@@ -139,4 +176,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CartDialog);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeFromCart: (id) => dispatch(removeFromCart(id)),
+    adjustQty: (id, value) => dispatch(adjustQty(id, value)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CartDialog);
